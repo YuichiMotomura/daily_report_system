@@ -12,8 +12,8 @@ public class EmployeeValidator {
     public static List<String> validate(Employee e, Boolean code_duplicate_check_flag, Boolean password_check_flag) {
         List<String> errors = new ArrayList<String>();
 
-        String code_error = _validateCode(e.getCode(), code_duplicate_check_flag);
-        if(!code_error.equals("")) {
+        String code_error = _validateCode(e.getCode(), code_duplicate_check_flag); // ←validateCodeメソッド？
+        if(!code_error.equals("")) { //if(! の!はどういう意味か
             errors.add(code_error);
         }
 
