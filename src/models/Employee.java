@@ -23,7 +23,7 @@ import javax.persistence.Table;
             ),
     @NamedQuery(
             name = "checkRegisteredCode",
-            query = "SELECT COUNT(e) FROM Employee AS e WHERE e.code = :code"
+            query = "SELECT COUNT(e) FROM Employee AS e WHERE e.code = :code" // :はどういう意味？
             ),
     @NamedQuery(
             name = "checkLoginCodeAndPassword",
