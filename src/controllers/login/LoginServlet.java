@@ -61,14 +61,14 @@ public class LoginServlet extends HttpServlet {
 
             String password = EncryptUtil.getPasswordEncrypt(
                     plain_pass,
-                    (String)this.getServletContext().getAttribute("salt")
+                    (String)this.getServletContext().getAttribute("salt") // どのようにして、リスナーから saltを取得しているのか
                     );
 
             try {
                 e = em.createNamedQuery("checkLoginCodeAndPassword", Employee.class)
                       .setParameter("code", code)
                       .setParameter("pass", password)
-                      .getSingleResult();
+                      .getSingleResult(); // レコード1件取得
             } catch(NoResultException ex) {}
 
             em.close();
@@ -78,7 +78,7 @@ public class LoginServlet extends HttpServlet {
             }
         }
 
-        if(!check_result) { // ←!はどういう意味？not?
+        if(!check_result) {
             request.setAttribute("_token", request.getSession().getId());
             request.setAttribute("hasError", true);
             request.setAttribute("code", code);
@@ -86,7 +86,7 @@ public class LoginServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/login/login.jsp");
             rd.forward(request, response);
         } else {
-            request.getSession().setAttribute("login_employee", e);
+            request.getSession().setAttribute("login_employee", e); // セッションスコープに従業員情報のオブジェクトを格納(logoutするまで保持)
 
             request.getSession().setAttribute("flush", "ログインしました。");
             response.sendRedirect(request.getContextPath() + "/");
